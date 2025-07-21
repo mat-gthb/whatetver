@@ -11,15 +11,6 @@ func _ready():
 	if not DirAccess.dir_exists_absolute(save_file_path):
 		DirAccess.open("user://").make_dir_recursive("saves")
 
-# Set the player name and store it
-func set_player_name(name: String):
-	player_name = name
-	print("Player name set to: ", player_name)
-
-# Get the current player name
-func get_player_name() -> String:
-	return player_name
-
 # Check if a save file exists for the given name
 func save_exists(name: String) -> bool:
 	var file_path = save_file_path + name + ".save"
@@ -34,10 +25,6 @@ func save_game_data(additional_data: Dictionary = {}):
 	var save_data = {
 		"player_name": player_name,
 		"save_date": Time.get_datetime_string_from_system(),
-		# Add other game data here
-		"level": 1,
-		"score": 0,
-		"inventory": []
 	}
 	
 	# Merge any additional data
@@ -116,3 +103,35 @@ func delete_save(name: String) -> bool:
 	else:
 		print("Save file doesn't exist: ", name)
 		return false
+		
+# FUNCTIONS FOR GAME DATA SAVES
+func set_player_name(name: String):
+	player_name = name
+	print("Player name set to: ", player_name)
+
+# Get the current player name
+func get_player_name() -> String:
+	return player_name
+	
+# ============= DEBUGGING TESTS =============
+
+func debug_create_test_save(name: String):
+	"""Create a test save file for debugging"""
+	var old_name = player_name
+	set_player_name(name)
+	save_game_data({"test_data": "This is test data", "level": 1})
+	player_name = old_name
+	print("DEBUG: Created test save for: ", name)
+
+func debug_list_all_saves():
+	"""Print all existing saves"""
+	var saves = get_all_saves()
+	print("DEBUG: All saves found: ", saves)
+	return saves
+
+func debug_save_file_path(name: String) -> String:
+	"""Get the full path to a save file for debugging"""
+	var path = save_file_path + name + ".save"
+	print("DEBUG: Save file path for '", name, "': ", path)
+	print("DEBUG: File exists: ", FileAccess.file_exists(path))
+	return path

@@ -4,12 +4,12 @@
 [ext_resource type="FontFile" uid="uid://d2dyyl65e8ibo" path="res://fonts/Exo_2/Exo2-VariableFont_wght.ttf" id="2_gba16"]
 [ext_resource type="AudioStream" uid="uid://d3jnpadt2po3e" path="res://audio/menu_music.wav" id="3_n2t5w"]
 
-[sub_resource type="Gradient" id="Gradient_j4dkj"]
+[sub_resource type="Gradient" id="Gradient_8pmbu"]
 offsets = PackedFloat32Array(0.243478, 1)
 colors = PackedColorArray(0.913056, 0.36456, 0.818344, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ss3oi"]
-gradient = SubResource("Gradient_j4dkj")
+gradient = SubResource("Gradient_8pmbu")
 use_hdr = true
 fill_from = Vector2(0.0368098, 0.984663)
 fill_to = Vector2(0, 0)
@@ -23,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="First Menu" type="ColorRect" parent="."]
+layout_mode = 0
 offset_right = 1153.0
 offset_bottom = 650.0
 color = Color(0.407843, 0, 0.752941, 1)

@@ -45,6 +45,16 @@ func start_menu_animation():
 	# Fade in
 	box_tween.tween_property(text_box, "modulate:a", 1.0, 3.0)
 
+func reverse_menu_animation():
+	var tween = create_tween()
+	tween.set_parallel(true)
+	
+	tween.tween_property(title_label, "modulate:a", 0.0, 2.0)
+	
+	var box_tween = create_tween()
+	box_tween.set_parallel(true)
+	box_tween.tween_property(text_box, "modulate:a", 0.0, 2.0)
+
 # Called when submit button is pressed or Enter is hit in text box
 func _on_submit_pressed():
 	_validate_and_process_name()
@@ -65,15 +75,20 @@ func _validate_and_process_name():
 		# Hide error message
 		error_label.visible = false
 		
-		# Save the player name
+		# Save the player name and game as a new save
 		game_manager.set_player_name(player_name)
 		
 		# Check if this name matches an existing save
 		if game_manager.save_exists(player_name):
-			# Switch to special scene for existing save
-			SceneManager.fade_to_scene("res://scenes/ProminentSave.tscn")
+			reverse_menu_animation()
+			# Switch to welcome back scene
+			await get_tree().create_timer(3.0).timeout
+			get_tree().change_scene_to_file("res://scenes/Returning.tscn")
+			
 		else:
-			# Switch to main game or character creation
+			# Switch to character creation
+			game_manager.save_game_data()
+			
 			SceneManager.fade_to_scene("res://scenes/CharacterSpeciSelect.tscn")
 	else:
 		# Show error message
@@ -110,3 +125,4 @@ func _show_error(message: String):
 	var error_tween = create_tween()
 	error_label.modulate.a = 0.0
 	error_tween.tween_property(error_label, "modulate:a", 1.0, 0.3)
+
